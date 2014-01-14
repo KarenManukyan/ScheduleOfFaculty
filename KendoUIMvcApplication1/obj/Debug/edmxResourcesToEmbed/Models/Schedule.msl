@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище schedulOfFacultyModelContainer" CdmEntityContainer="schedulOfFacultyEntities">
+    <EntitySetMapping Name="lecturers">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.lecturer">
+        <MappingFragment StoreEntitySet="lecturer">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="lecturerProfessions">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.lecturerProfession">
+        <MappingFragment StoreEntitySet="lecturerProfession">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+          <ScalarProperty Name="professionId" ColumnName="professionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="lessons">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.lesson">
+        <MappingFragment StoreEntitySet="lesson">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="typeId" ColumnName="typeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="lessonForLecturers">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.lessonForLecturer">
+        <MappingFragment StoreEntitySet="lessonForLecturer">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+          <ScalarProperty Name="lessonId" ColumnName="lessonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logins">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.login">
+        <MappingFragment StoreEntitySet="login">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="login1" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="professions">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.profession">
+        <MappingFragment StoreEntitySet="profession">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="profession1" ColumnName="profession" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qualifications">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.qualification">
+        <MappingFragment StoreEntitySet="qualification">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="types">
+      <EntityTypeMapping TypeName="schedulOfFacultyModel.type">
+        <MappingFragment StoreEntitySet="type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="type1" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

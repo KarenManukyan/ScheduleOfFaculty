@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище schedulOfFacultyModel" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Хранилище schedulOfFacultyModelContainer">
+    <EntitySet Name="lecturer" EntityType="Хранилище schedulOfFacultyModel.lecturer" store:Type="Tables" />
+    <EntitySet Name="lecturerProfession" EntityType="Хранилище schedulOfFacultyModel.lecturerProfession" store:Type="Tables" />
+    <EntitySet Name="lesson" EntityType="Хранилище schedulOfFacultyModel.lesson" store:Type="Tables" />
+    <EntitySet Name="lessonForLecturer" EntityType="Хранилище schedulOfFacultyModel.lessonForLecturer" store:Type="Tables" />
+    <EntitySet Name="login" EntityType="Хранилище schedulOfFacultyModel.login" store:Type="Tables" />
+    <EntitySet Name="profession" EntityType="Хранилище schedulOfFacultyModel.profession" store:Type="Tables" />
+    <EntitySet Name="qualification" EntityType="Хранилище schedulOfFacultyModel.qualification" store:Type="Tables" />
+    <EntitySet Name="type" EntityType="Хранилище schedulOfFacultyModel.type" store:Type="Tables" />
+    <AssociationSet Name="lectureProfession" Association="Хранилище schedulOfFacultyModel.lectureProfession">
+      <End Role="lecturer" EntitySet="lecturer" />
+      <End Role="lecturerProfession" EntitySet="lecturerProfession" />
+    </AssociationSet>
+    <AssociationSet Name="lecturer1" Association="Хранилище schedulOfFacultyModel.lecturer1">
+      <End Role="lecturer" EntitySet="lecturer" />
+      <End Role="lessonForLecturer" EntitySet="lessonForLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="lesson1" Association="Хранилище schedulOfFacultyModel.lesson1">
+      <End Role="lesson" EntitySet="lesson" />
+      <End Role="lessonForLecturer" EntitySet="lessonForLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="Profession1" Association="Хранилище schedulOfFacultyModel.Profession1">
+      <End Role="profession" EntitySet="profession" />
+      <End Role="lecturerProfession" EntitySet="lecturerProfession" />
+    </AssociationSet>
+    <AssociationSet Name="qualification1" Association="Хранилище schedulOfFacultyModel.qualification1">
+      <End Role="qualification" EntitySet="qualification" />
+      <End Role="lecturer" EntitySet="lecturer" />
+    </AssociationSet>
+    <AssociationSet Name="type1" Association="Хранилище schedulOfFacultyModel.type1">
+      <End Role="type" EntitySet="type" />
+      <End Role="lesson" EntitySet="lesson" />
+    </AssociationSet>
+    <AssociationSet Name="user" Association="Хранилище schedulOfFacultyModel.user">
+      <End Role="lecturer" EntitySet="lecturer" />
+      <End Role="login" EntitySet="login" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="lecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="surname" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="birthday" Type="datetime" Nullable="false" />
+    <Property Name="qualificationId" Type="int" Nullable="false" />
+    <Property Name="role" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lecturerProfession">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerId" Type="int" Nullable="false" />
+    <Property Name="professionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lesson">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="time" Type="int" Nullable="false" />
+    <Property Name="typeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lessonForLecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerId" Type="int" Nullable="false" />
+    <Property Name="lessonId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="login">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="password" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="lecturerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="profession">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="profession" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="qualification">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <Association Name="lectureProfession">
+    <End Role="lecturer" Type="Хранилище schedulOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lecturerProfession" Type="Хранилище schedulOfFacultyModel.lecturerProfession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lecturerProfession">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="lecturer1">
+    <End Role="lecturer" Type="Хранилище schedulOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lessonForLecturer" Type="Хранилище schedulOfFacultyModel.lessonForLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lessonForLecturer">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="lesson1">
+    <End Role="lesson" Type="Хранилище schedulOfFacultyModel.lesson" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lessonForLecturer" Type="Хранилище schedulOfFacultyModel.lessonForLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lesson">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lessonForLecturer">
+        <PropertyRef Name="lessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Profession1">
+    <End Role="profession" Type="Хранилище schedulOfFacultyModel.profession" Multiplicity="1" />
+    <End Role="lecturerProfession" Type="Хранилище schedulOfFacultyModel.lecturerProfession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="profession">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lecturerProfession">
+        <PropertyRef Name="professionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="qualification1">
+    <End Role="qualification" Type="Хранилище schedulOfFacultyModel.qualification" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lecturer" Type="Хранилище schedulOfFacultyModel.lecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qualification">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lecturer">
+        <PropertyRef Name="qualificationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="type1">
+    <End Role="type" Type="Хранилище schedulOfFacultyModel.type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lesson" Type="Хранилище schedulOfFacultyModel.lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lesson">
+        <PropertyRef Name="typeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="user">
+    <End Role="lecturer" Type="Хранилище schedulOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="login" Type="Хранилище schedulOfFacultyModel.login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="login">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

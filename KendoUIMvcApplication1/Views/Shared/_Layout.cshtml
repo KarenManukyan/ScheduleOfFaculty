@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>@ViewBag.Title</title>
+        
+		<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+		<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+	    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+	    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+	    <script src="@Url.Content("~/Scripts/kendo/2013.3.1119/jquery.min.js")"></script>
+	    <script src="~/Scripts/home.js"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.all.min.js")"></script>
+	    <script src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.aspnetmvc.min.js")"></script>
+	    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+	<body >
+		<header >
+	       <div class="demo-section" >
+              @(Html.Kendo().Menu()
+                      .Name("menuSprites")
+                      .Items(items =>
+                      {
+                          items.Add().Text("Home")
+                               .SpriteCssClasses("home").Action("Index", "Home");                                             
+                          
+                          items.Add().Text("Schedule")
+                               .SpriteCssClasses("schedule")
+                               .Items(children =>
+                               {
+                                   children.Add().Text("My schedule").Action("MySchedule", "Schedule");
+                                   children.Add().Text("Lecturers' schedule").Action("Lecturers","Schedule");
+                               });
+
+                          items.Add().Text("Lessons").Action("Index", "Lesson");
+                          items.Add().Text("Employees").Items(children =>
+                               {
+                                   children.Add().Text("All").Action("Index", "Employee");
+                                   children.Add().Text("Lecturers").Action("Lecturers","Employee");
+                                   children.Add().Text("Librarians").Action("Librarian", "Employee");
+                                   children.Add().Text("Other").Action("Other","Employee");
+                               });
+                          
+                          items.Add().Text("Reports").Action("Index", "Report");
+                               
+                               
+                      })
+                )
+
+            </div>
+
+            <style scoped>
+                .demo-section h3 {
+                    font-weight: normal;
+                    padding-bottom: 10px;
+                }
+                
+            </style>
+		</header>
+		<div id="body">
+			@RenderBody()
+		</div>
+
+		<footer>
+			<div class="content-wrapper">
+				<div class="float-left">
+					<p>&copy; @DateTime.Now.Year - KMS Corporation</p>
+                    <p>All Rights Reserved</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

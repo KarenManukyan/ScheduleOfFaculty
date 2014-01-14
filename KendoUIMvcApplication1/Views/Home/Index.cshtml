@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+  
+<div class="lessons" style="margin:10px;">
+    
+    @(Html.Kendo().Grid<ScheduleOfFaculty.Models.lesson>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.name);
+            columns.Bound(c => c.time);
+            columns.Bound(c => c.type);
+           
+        })               
+        .Sortable()
+        .Pageable()
+        .Scrollable()
+        .ClientDetailTemplateId("template")
+        .HtmlAttributes(new { style = "height:430px;" })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(6)
+            .Read(read => read.Action("LessonGrid", "Home"))            
+        )        
+        .Events(events => events.DataBound("dataBound"))
+       
+)
+<script id="template" type="text/kendo-tmpl">
+    
+    @(Html.Kendo().Grid<ScheduleOfFaculty.Models.lecturer>()
+            .Name("gridEmployees")
+            .Columns(columns =>
+            {
+                columns.Bound(o => o.name).Width(70);
+                columns.Bound(o => o.surname).Width(110);
+                columns.Bound(o => o.qualificationId);
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(5)
+                .Read(read => read.Action("LecturerGrid", "Home", new { employeeID = "#=EmployeeID#" }))
+            )
+            .Pageable()
+            .Sortable()
+            .ToClientTemplate()
+    )
+</script>
+<script>
+    function dataBound() {
+        this.expandRow(this.tbody.find("tr.k-master-row").first());
+    }
+</script>
+
+
+
+
+</div>
+

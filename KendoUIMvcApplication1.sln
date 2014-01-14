@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoUIMvcApplication1", "KendoUIMvcApplication1\KendoUIMvcApplication1.csproj", "{3ADC0102-BDA5-4B23-B401-C25BCD48EFB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoUIMvcApplication1Tests", "KendoUIMvcApplication1Tests\KendoUIMvcApplication1Tests.csproj", "{88DE7CE6-E956-4323-A573-E2BE3C9C3655}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3ADC0102-BDA5-4B23-B401-C25BCD48EFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADC0102-BDA5-4B23-B401-C25BCD48EFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADC0102-BDA5-4B23-B401-C25BCD48EFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADC0102-BDA5-4B23-B401-C25BCD48EFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88DE7CE6-E956-4323-A573-E2BE3C9C3655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88DE7CE6-E956-4323-A573-E2BE3C9C3655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88DE7CE6-E956-4323-A573-E2BE3C9C3655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88DE7CE6-E956-4323-A573-E2BE3C9C3655}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

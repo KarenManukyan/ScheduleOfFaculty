@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="schedulOfFacultyModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="schedulOfFacultyEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="lecturers" EntityType="schedulOfFacultyModel.lecturer" />
+    <EntitySet Name="lecturerProfessions" EntityType="schedulOfFacultyModel.lecturerProfession" />
+    <EntitySet Name="lessons" EntityType="schedulOfFacultyModel.lesson" />
+    <EntitySet Name="lessonForLecturers" EntityType="schedulOfFacultyModel.lessonForLecturer" />
+    <EntitySet Name="logins" EntityType="schedulOfFacultyModel.login" />
+    <EntitySet Name="professions" EntityType="schedulOfFacultyModel.profession" />
+    <EntitySet Name="qualifications" EntityType="schedulOfFacultyModel.qualification" />
+    <EntitySet Name="types" EntityType="schedulOfFacultyModel.type" />
+    <AssociationSet Name="lectureProfession" Association="schedulOfFacultyModel.lectureProfession">
+      <End Role="lecturer" EntitySet="lecturers" />
+      <End Role="lecturerProfession" EntitySet="lecturerProfessions" />
+    </AssociationSet>
+    <AssociationSet Name="lecturer1" Association="schedulOfFacultyModel.lecturer1">
+      <End Role="lecturer" EntitySet="lecturers" />
+      <End Role="lessonForLecturer" EntitySet="lessonForLecturers" />
+    </AssociationSet>
+    <AssociationSet Name="qualification1" Association="schedulOfFacultyModel.qualification1">
+      <End Role="qualification" EntitySet="qualifications" />
+      <End Role="lecturer" EntitySet="lecturers" />
+    </AssociationSet>
+    <AssociationSet Name="user" Association="schedulOfFacultyModel.user">
+      <End Role="lecturer" EntitySet="lecturers" />
+      <End Role="login" EntitySet="logins" />
+    </AssociationSet>
+    <AssociationSet Name="Profession1" Association="schedulOfFacultyModel.Profession1">
+      <End Role="profession" EntitySet="professions" />
+      <End Role="lecturerProfession" EntitySet="lecturerProfessions" />
+    </AssociationSet>
+    <AssociationSet Name="lesson1" Association="schedulOfFacultyModel.lesson1">
+      <End Role="lesson" EntitySet="lessons" />
+      <End Role="lessonForLecturer" EntitySet="lessonForLecturers" />
+    </AssociationSet>
+    <AssociationSet Name="type1" Association="schedulOfFacultyModel.type1">
+      <End Role="type" EntitySet="types" />
+      <End Role="lesson" EntitySet="lessons" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="lecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="surname" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="birthday" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="qualificationId" Type="Int32" Nullable="false" />
+    <Property Name="role" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="lecturerProfessions" Relationship="schedulOfFacultyModel.lectureProfession" FromRole="lecturer" ToRole="lecturerProfession" />
+    <NavigationProperty Name="lessonForLecturers" Relationship="schedulOfFacultyModel.lecturer1" FromRole="lecturer" ToRole="lessonForLecturer" />
+    <NavigationProperty Name="qualification" Relationship="schedulOfFacultyModel.qualification1" FromRole="lecturer" ToRole="qualification" />
+    <NavigationProperty Name="logins" Relationship="schedulOfFacultyModel.user" FromRole="lecturer" ToRole="login" />
+  </EntityType>
+  <EntityType Name="lecturerProfession">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerId" Type="Int32" Nullable="false" />
+    <Property Name="professionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="lecturer" Relationship="schedulOfFacultyModel.lectureProfession" FromRole="lecturerProfession" ToRole="lecturer" />
+    <NavigationProperty Name="profession" Relationship="schedulOfFacultyModel.Profession1" FromRole="lecturerProfession" ToRole="profession" />
+  </EntityType>
+  <EntityType Name="lesson">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="time" Type="Int32" Nullable="false" />
+    <Property Name="typeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="lessonForLecturers" Relationship="schedulOfFacultyModel.lesson1" FromRole="lesson" ToRole="lessonForLecturer" />
+    <NavigationProperty Name="type" Relationship="schedulOfFacultyModel.type1" FromRole="lesson" ToRole="type" />
+  </EntityType>
+  <EntityType Name="lessonForLecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerId" Type="Int32" Nullable="false" />
+    <Property Name="lessonId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="lecturer" Relationship="schedulOfFacultyModel.lecturer1" FromRole="lessonForLecturer" ToRole="lecturer" />
+    <NavigationProperty Name="lesson" Relationship="schedulOfFacultyModel.lesson1" FromRole="lessonForLecturer" ToRole="lesson" />
+  </EntityType>
+  <EntityType Name="login">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="login1" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="lecturerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="lecturer" Relationship="schedulOfFacultyModel.user" FromRole="login" ToRole="lecturer" />
+  </EntityType>
+  <EntityType Name="profession">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="profession1" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="lecturerProfessions" Relationship="schedulOfFacultyModel.Profession1" FromRole="profession" ToRole="lecturerProfession" />
+  </EntityType>
+  <EntityType Name="qualification">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="lecturers" Relationship="schedulOfFacultyModel.qualification1" FromRole="qualification" ToRole="lecturer" />
+  </EntityType>
+  <EntityType Name="type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="type1" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="lessons" Relationship="schedulOfFacultyModel.type1" FromRole="type" ToRole="lesson" />
+  </EntityType>
+  <Association Name="lectureProfession">
+    <End Role="lecturer" Type="schedulOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lecturerProfession" Type="schedulOfFacultyModel.lecturerProfession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lecturerProfession">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="lecturer1">
+    <End Role="lecturer" Type="schedulOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lessonForLecturer" Type="schedulOfFacultyModel.lessonForLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lessonForLecturer">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="qualification1">
+    <End Role="qualification" Type="schedulOfFacultyModel.qualification" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lecturer" Type="schedulOfFacultyModel.lecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qualification">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lecturer">
+        <PropertyRef Name="qualificationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="user">
+    <End Role="lecturer" Type="schedulOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="login" Type="schedulOfFacultyModel.login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="login">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Profession1">
+    <End Role="profession" Type="schedulOfFacultyModel.profession" Multiplicity="1" />
+    <End Role="lecturerProfession" Type="schedulOfFacultyModel.lecturerProfession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="profession">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lecturerProfession">
+        <PropertyRef Name="professionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="lesson1">
+    <End Role="lesson" Type="schedulOfFacultyModel.lesson" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lessonForLecturer" Type="schedulOfFacultyModel.lessonForLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lesson">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lessonForLecturer">
+        <PropertyRef Name="lessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="type1">
+    <End Role="type" Type="schedulOfFacultyModel.type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="lesson" Type="schedulOfFacultyModel.lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="lesson">
+        <PropertyRef Name="typeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
