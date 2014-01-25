@@ -4,13 +4,14 @@
   
 <div class="lessons" style="margin:10px;">
     
-    @(Html.Kendo().Grid<ScheduleOfFaculty.Models.lesson>()
+    @(Html.Kendo().Grid<ScheduleOfFaculty.Models.LessonGrid>()
         .Name("grid")
         .Columns(columns =>
         {
-            columns.Bound(c => c.name);
-            columns.Bound(c => c.time);
-            columns.Bound(c => c.type);
+            columns.Bound(c => c.Id);
+            columns.Bound(c => c.Name);
+            columns.Bound(c => c.Time);
+            columns.Bound(c => c.Type);
            
         })               
         .Sortable()
@@ -28,18 +29,20 @@
 )
 <script id="template" type="text/kendo-tmpl">
     
-    @(Html.Kendo().Grid<ScheduleOfFaculty.Models.lecturer>()
-            .Name("gridEmployees")
+    @(Html.Kendo().Grid<ScheduleOfFaculty.Models.LecturerGrid>()
+            .Name("grid_#=Id#")
             .Columns(columns =>
             {
-                columns.Bound(o => o.name).Width(70);
-                columns.Bound(o => o.surname).Width(110);
-                columns.Bound(o => o.qualificationId);
+                columns.Bound(o => o.Id).Width(70);
+                columns.Bound(o => o.Name).Width(70);
+                columns.Bound(o => o.Surname).Width(110);
+                columns.Bound(o => o.Qualification);
+                columns.Bound(o => o.Birthday);
             })
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .PageSize(5)
-                .Read(read => read.Action("LecturerGrid", "Home", new { employeeID = "#=EmployeeID#" }))
+                .Read(read => read.Action("LecturerGrid", "Home", new { employeeID = "#=Id#" }))
             )
             .Pageable()
             .Sortable()
@@ -51,9 +54,6 @@
         this.expandRow(this.tbody.find("tr.k-master-row").first());
     }
 </script>
-
-
-
 
 </div>
 

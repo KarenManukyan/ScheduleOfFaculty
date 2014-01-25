@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace ScheduleOfFaculty.Models
 {
@@ -30,6 +32,27 @@ namespace ScheduleOfFaculty.Models
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
+    public class AuthorizeActiveDirectoryAttribute : System.Web.Mvc.AuthorizeAttribute
+    {
+        public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
+        {
+            
+            var user = filterContext.HttpContext.User;
 
+            //Your code to get the list of roles for the current user
+
+            var formsIdentity = filterContext.HttpContext.User.Identity as FormsIdentity;
+
+            List<String> roles = new List<String>();
+            roles.Add("Admin");
+            roles.Add("User");
+            roles.Add("DefaultUser");
+            filterContext.HttpContext.User = new System.Security.Principal.GenericPrincipal(formsIdentity, roles.ToArray());
+
+            base.OnAuthorization(filterContext);
+        }
+
+    }
+    
 
 }

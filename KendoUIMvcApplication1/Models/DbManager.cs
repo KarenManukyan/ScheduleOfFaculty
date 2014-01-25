@@ -12,22 +12,58 @@ namespace ScheduleOfFaculty.Models
         public DbManager() 
         {
             this._db = new schedulOfFacultyEntities();
+            _db.Configuration.ProxyCreationEnabled = false;
         }
 
-        public IEnumerable<lecturer> GetLecturer()
+        public IEnumerable<LecturerGrid> GetLecturer(int id)
         {
-            _db.Configuration.ProxyCreationEnabled = false;
-            var data = _db.lecturers;
+            var data = from lect in _db.lecturers
+                       from less in _db.lessonForLecturers
+                       from qual in _db.qualifications
+                       where (less.lessonId == id && lect.id == less.lecturerId) &&
+                       (lect.qualificationId == qual.id)
+                       select new LecturerGrid
+                       {
+                           Id = lect.id,
+                           Name = lect.name,
+                           Surname = lect.surname,
+                           Birthday = lect.birthday,
+                           Qualification = qual.name
+                       };
+            
             return data;
         }
 
-        public IEnumerable<lesson> GetLessons()
+        public IEnumerable<LessonGrid> GetLessons()
         {
-            _db.Configuration.ProxyCreationEnabled = false;
-            var data = _db.lessons.ToList<lesson>();
+            var data = from l in _db.lessons
+                       join t in _db.types on l.typeId equals t.id
+                       select new LessonGrid
+                       {
+                           Id = l.id,
+                           Name =l.name,
+                           Time = l.time,
+                           Type = t.type1
+                       };
+            
             return data;
         }
 
+        public login GetCurrentUserLogin(string UserName, string Password)
+        {
+            login log = (from user in _db.logins
+                         where user.login1 == UserName && user.password == Password
+                         select user).Single<login>();
+            return log;
+        }
 
+
+        public lecturer GetCurrentUser(int id)
+        {
+            lecturer teacher = (from user in _db.lecturers
+                                where user.id == id 
+                                select user).Single<lecturer>();
+            return teacher;
+        }
     }
 }

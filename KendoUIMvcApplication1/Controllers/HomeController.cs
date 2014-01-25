@@ -18,7 +18,7 @@ namespace ScheduleOfFaculty.Controllers
         {
             dbManager = new DbManager();
         }
-        [Authorize]
+        
         public ActionResult Index()
         {
             return View();
@@ -32,7 +32,7 @@ namespace ScheduleOfFaculty.Controllers
 
         public ActionResult LecturerGrid(int employeeID, [DataSourceRequest] DataSourceRequest request)
         {
-            IEnumerable<lecturer> data = dbManager.GetLecturer();
+            var data = dbManager.GetLecturer(employeeID);
             return Json(data.ToDataSourceResult(request),JsonRequestBehavior.AllowGet);
         }
         
