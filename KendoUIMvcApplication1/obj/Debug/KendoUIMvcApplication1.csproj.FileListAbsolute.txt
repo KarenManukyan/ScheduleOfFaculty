@@ -64,3 +64,4 @@ C:\Users\Karen\documents\visual studio 2012\Projects\KendoUIMvcApplication1\Kend
 C:\Users\Karen\documents\visual studio 2012\Projects\KendoUIMvcApplication1\KendoUIMvcApplication1\obj\Debug\ScheduleOfFaculty.dll
 C:\Users\Karen\documents\visual studio 2012\Projects\KendoUIMvcApplication1\KendoUIMvcApplication1\obj\Debug\ScheduleOfFaculty.pdb
 C:\Users\Karen\documents\visual studio 2012\Projects\KendoUIMvcApplication1\KendoUIMvcApplication1\obj\Debug\KendoUIMvcApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Karen\documents\visual studio 2012\Projects\KendoUIMvcApplication1\KendoUIMvcApplication1\bin\DocX.dll

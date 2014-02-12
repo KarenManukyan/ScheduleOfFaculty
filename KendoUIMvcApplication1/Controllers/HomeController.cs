@@ -7,6 +7,7 @@ using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using ScheduleOfFaculty.Models;
 using System.Web.Script.Serialization;
+using ScheduleOfFaculty.Services;
 
 namespace ScheduleOfFaculty.Controllers
 {
@@ -33,7 +34,7 @@ namespace ScheduleOfFaculty.Controllers
         public ActionResult LecturerGrid(int employeeID, [DataSourceRequest] DataSourceRequest request)
         {
             var data = dbManager.GetLecturer(employeeID);
-            return Json(data.ToDataSourceResult(request),JsonRequestBehavior.AllowGet);
+            return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
         
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
@@ -45,6 +46,14 @@ namespace ScheduleOfFaculty.Controllers
             result.Content = serializer.Serialize(data.ToDataSourceResult(request));
             result.ContentType = "application/json";
             return result;
+        }
+        public FileContentResult GetDocument()
+        {
+            Report report=new Report();
+            byte[] doc = report.GetDocument();
+            string mimeType = "application/docx";
+            Response.AppendHeader("Content-Disposition", "inline; filename=WordReport.docx");
+            return File(doc, mimeType);
         }
     }
 }
