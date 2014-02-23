@@ -49,6 +49,22 @@ namespace ScheduleOfFaculty.Models
             return data;
         }
 
+        public IEnumerable<LecturerGrid> GetLecturers()
+        {
+            var data = from l in _db.lecturers
+                       join t in _db.qualifications on l.qualificationId equals t.id
+                       select new LecturerGrid
+                       {
+                           Id = l.id,
+                           Name = l.name,
+                           Surname = l.surname,
+                           Birthday = l.birthday,
+                           Qualification = t.name
+                       };
+
+            return data;
+        }
+
         public login GetCurrentUserLogin(string UserName, string Password)
         {
             login log = (from user in _db.logins
@@ -64,6 +80,23 @@ namespace ScheduleOfFaculty.Models
                                 where user.id == id 
                                 select user).Single<lecturer>();
             return teacher;
+        }
+
+        public void CreateLesson(lesson les)
+        {
+            _db.lessons.Add(les);
+            _db.SaveChanges();
+        }
+
+        public void DestroyLesson(lesson les)
+        {
+            _db.lessons.Remove(les);
+            _db.SaveChanges();
+        }
+
+        public void Update(lesson les)
+        {
+            
         }
     }
 }

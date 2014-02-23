@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Դասախոսներ";
+}
+@(Html.Kendo().Grid<ScheduleOfFaculty.Models.LecturerGrid>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Surname).Width(150);
+        columns.Bound(p => p.Name).Width(100);
+        columns.Bound(p => p.Birthday).Width(200);
+        columns.Bound(p => p.Qualification).Width(100);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(172);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .Scrollable(s => s.Height("auto"))
+    
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.Id))
+        .Create(update => update.Action("Create", "Lecturer"))
+        .Read(read => read.Action("Read", "Lecturer"))
+        .Update(update => update.Action("Update", "Lecturer"))
+        .Destroy(update => update.Action("Destroy", "Lecturer"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {    
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function() {
+                        message += this + "\n";
+                    });
+                }
+            });        
+            alert(message);
+        }
+    }
+</script>

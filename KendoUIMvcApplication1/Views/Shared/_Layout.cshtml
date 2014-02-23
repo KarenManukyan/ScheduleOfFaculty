@@ -21,27 +21,19 @@
                       .Name("menuSprites")
                       .Items(items =>
                       {
-                          items.Add().Text("Home")
+                          items.Add().Text("Գլխավոր")
                                .SpriteCssClasses("home").Action("Index", "Home");                                             
                           
-                          items.Add().Text("Schedule")
+                          items.Add().Text("Գրաֆիկ")
                                .SpriteCssClasses("schedule")
                                .Items(children =>
                                {
-                                   children.Add().Text("My schedule").Action("MySchedule", "Schedule");
-                                   children.Add().Text("Lecturers' schedule").Action("Lecturers","Schedule");
+                                      children.Add().Text("Առարկաներ").Action("Index", "Lesson");
+                                      children.Add().Text("Դասախոսներ").Action("Index", "Lecturer");
+                                      children.Add().Text("Միասին").Action("Index", "Join");
                                });
-
-                          items.Add().Text("Lessons").Action("Index", "Lesson");
-                          items.Add().Text("Employees").Items(children =>
-                               {
-                                   children.Add().Text("All").Action("Index", "Employee");
-                                   children.Add().Text("Lecturers").Action("Lecturers","Employee");
-                                   children.Add().Text("Librarians").Action("Librarian", "Employee");
-                                   children.Add().Text("Other").Action("Other","Employee");
-                               });
-                          
-                          items.Add().Text("Reports").Action("Index", "Report");
+                         items.Add().Text("Հաշվետվություն").Action("Index", "Report");
+                         items.Add().Text("Մեր մասին").Action("Index", "About");
                                
                                
                       })

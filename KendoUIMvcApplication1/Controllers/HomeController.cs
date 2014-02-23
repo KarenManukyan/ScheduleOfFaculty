@@ -37,16 +37,6 @@ namespace ScheduleOfFaculty.Controllers
             return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
         
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
-        {
-            var data = dbManager.GetLessons();
-            var serializer = new JavaScriptSerializer();
-            var result = new ContentResult();
-            serializer.MaxJsonLength = Int32.MaxValue; // Whatever max length you want here
-            result.Content = serializer.Serialize(data.ToDataSourceResult(request));
-            result.ContentType = "application/json";
-            return result;
-        }
         public FileContentResult GetDocument()
         {
             Report report=new Report();
