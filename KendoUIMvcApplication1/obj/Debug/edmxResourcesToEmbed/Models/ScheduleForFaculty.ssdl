@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище ScheduleOfFacultyModel" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Хранилище ScheduleOfFacultyModelContainer">
+    <EntitySet Name="JoinLessonLecturer" EntityType="Хранилище ScheduleOfFacultyModel.JoinLessonLecturer" store:Type="Tables" />
+    <EntitySet Name="lecturer" EntityType="Хранилище ScheduleOfFacultyModel.lecturer" store:Type="Tables" />
+    <EntitySet Name="Lesson" EntityType="Хранилище ScheduleOfFacultyModel.Lesson" store:Type="Tables" />
+    <AssociationSet Name="LecturerForinKey" Association="Хранилище ScheduleOfFacultyModel.LecturerForinKey">
+      <End Role="lecturer" EntitySet="lecturer" />
+      <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="LessonForinKey" Association="Хранилище ScheduleOfFacultyModel.LessonForinKey">
+      <End Role="Lesson" EntitySet="Lesson" />
+      <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturer" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="JoinLessonLecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerId" Type="int" Nullable="false" />
+    <Property Name="lessonId" Type="int" Nullable="false" />
+    <Property Name="TimeForLecurer" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="surname" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="patromic" Type="nvarchar" MaxLength="100" />
+    <Property Name="birthday" Type="datetime" />
+    <Property Name="qualification" Type="int" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="time" Type="int" Nullable="false" />
+    <Property Name="type" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <Association Name="LecturerForinKey">
+    <End Role="lecturer" Type="Хранилище ScheduleOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JoinLessonLecturer" Type="Хранилище ScheduleOfFacultyModel.JoinLessonLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="JoinLessonLecturer">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonForinKey">
+    <End Role="Lesson" Type="Хранилище ScheduleOfFacultyModel.Lesson" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JoinLessonLecturer" Type="Хранилище ScheduleOfFacultyModel.JoinLessonLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="JoinLessonLecturer">
+        <PropertyRef Name="lessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

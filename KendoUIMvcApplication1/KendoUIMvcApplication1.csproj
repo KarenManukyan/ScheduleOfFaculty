@@ -168,54 +168,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LecturerController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\DbManager.cs" />
-    <Compile Include="Models\lecturer.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Grid.cs" />
-    <Compile Include="Models\lecturerProfession.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
+    <Compile Include="Models\JoinLessonLecturer.cs">
+      <DependentUpon>ScheduleForFaculty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\lesson.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
+    <Compile Include="Models\lecturer.cs">
+      <DependentUpon>ScheduleForFaculty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\lessonForLecturer.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
+    <Compile Include="Models\LecturerLessonStore.cs" />
+    <Compile Include="Models\LecturerStore.cs" />
+    <Compile Include="Models\Lesson.cs">
+      <DependentUpon>ScheduleForFaculty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\login.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\profession.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\qualification.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Schedule.Context.cs">
+    <Compile Include="Models\LessonStore.cs" />
+    <Compile Include="Models\ScheduleForFaculty.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Schedule.Context.tt</DependentUpon>
+      <DependentUpon>ScheduleForFaculty.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Schedule.cs">
+    <Compile Include="Models\ScheduleForFaculty.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Schedule.tt</DependentUpon>
+      <DependentUpon>ScheduleForFaculty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Schedule.Designer.cs">
+    <Compile Include="Models\ScheduleForFaculty.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Schedule.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\type.cs">
-      <DependentUpon>Schedule.tt</DependentUpon>
+      <DependentUpon>ScheduleForFaculty.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="schedulOfFacultyDataSet.Designer.cs">
@@ -227,7 +212,7 @@
     <Compile Include="Services\Report.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\schedulOfFaculty.sdf" />
+    <Content Include="App_Data\ScheduleOfFaculty.sdf" />
     <Content Include="Content\custom\demo.css" />
     <Content Include="Content\custom\font-awesome.css" />
     <Content Include="Content\custom\style.css" />
@@ -490,28 +475,28 @@
     <Content Include="Global.asax" />
     <Content Include="Content\kendo\2013.3.1119\images\kendoui.ttf" />
     <Content Include="Content\kendo\2013.3.1119\images\kendoui.woff" />
-    <EntityDeploy Include="Models\Schedule.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Schedule.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="Images\custom\wood_pattern.jpg" />
     <Content Include="KM.ico" />
-    <Content Include="Models\Schedule.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Schedule.edmx</DependentUpon>
-      <LastGenOutput>Schedule.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Schedule.edmx.diagram">
-      <DependentUpon>Schedule.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Schedule.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Schedule.edmx</DependentUpon>
-      <LastGenOutput>Schedule.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\custom\.DS_Store" />
     <Content Include="schedulOfFacultyDataSet.xsc">
       <DependentUpon>schedulOfFacultyDataSet.xsd</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ScheduleForFaculty.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ScheduleForFaculty.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ScheduleForFaculty.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ScheduleForFaculty.edmx</DependentUpon>
+      <LastGenOutput>ScheduleForFaculty.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ScheduleForFaculty.edmx.diagram">
+      <DependentUpon>ScheduleForFaculty.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ScheduleForFaculty.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ScheduleForFaculty.edmx</DependentUpon>
+      <LastGenOutput>ScheduleForFaculty.cs</LastGenOutput>
     </Content>
     <None Include="schedulOfFacultyDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -765,7 +750,6 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
     <Content Include="Views\Lecturer\Index.cshtml" />
   </ItemGroup>

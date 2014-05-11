@@ -12,6 +12,7 @@ namespace ScheduleOfFaculty.Models
         public int Time { get; set; }
         public string Type { get; set; }
     }
+
     public class LecturerGrid
     {
         public int Id { get; set; }
@@ -19,5 +20,13 @@ namespace ScheduleOfFaculty.Models
         public string Surname { get; set; }
         public System.DateTime Birthday { get; set; }
         public string Qualification { get; set; }
+    }
+
+    public class LessonLecturerGrid
+    {
+        public int Id { get; set; }
+        public Lesson Less { get; set; }
+        public lecturer Lect { get; set; }
+        public int Time { get; set; }
     }
 }

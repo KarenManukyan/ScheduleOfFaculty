@@ -12,16 +12,14 @@ namespace ScheduleOfFaculty.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class profession
+    public partial class JoinLessonLecturer
     {
-        public profession()
-        {
-            this.lecturerProfessions = new HashSet<lecturerProfession>();
-        }
-    
         public int id { get; set; }
-        public string profession1 { get; set; }
+        public int lecturerId { get; set; }
+        public int lessonId { get; set; }
+        public int TimeForLecurer { get; set; }
     
-        public virtual ICollection<lecturerProfession> lecturerProfessions { get; set; }
+        public virtual lecturer lecturer { get; set; }
+        public virtual Lesson Lesson { get; set; }
     }
 }

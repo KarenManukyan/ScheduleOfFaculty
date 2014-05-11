@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ScheduleOfFacultyModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ScheduleForFacultyEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="JoinLessonLecturers" EntityType="ScheduleOfFacultyModel.JoinLessonLecturer" />
+    <EntitySet Name="lecturers" EntityType="ScheduleOfFacultyModel.lecturer" />
+    <EntitySet Name="Lessons" EntityType="ScheduleOfFacultyModel.Lesson" />
+    <AssociationSet Name="LecturerForinKey" Association="ScheduleOfFacultyModel.LecturerForinKey">
+      <End Role="lecturer" EntitySet="lecturers" />
+      <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturers" />
+    </AssociationSet>
+    <AssociationSet Name="LessonForinKey" Association="ScheduleOfFacultyModel.LessonForinKey">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="JoinLessonLecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerId" Type="Int32" Nullable="false" />
+    <Property Name="lessonId" Type="Int32" Nullable="false" />
+    <Property Name="TimeForLecurer" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="lecturer" Relationship="ScheduleOfFacultyModel.LecturerForinKey" FromRole="JoinLessonLecturer" ToRole="lecturer" />
+    <NavigationProperty Name="Lesson" Relationship="ScheduleOfFacultyModel.LessonForinKey" FromRole="JoinLessonLecturer" ToRole="Lesson" />
+  </EntityType>
+  <EntityType Name="lecturer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="surname" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="patromic" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="birthday" Type="DateTime" Precision="3" />
+    <Property Name="qualification" Type="Int32" />
+    <NavigationProperty Name="JoinLessonLecturers" Relationship="ScheduleOfFacultyModel.LecturerForinKey" FromRole="lecturer" ToRole="JoinLessonLecturer" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="time" Type="Int32" Nullable="false" />
+    <Property Name="type" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="JoinLessonLecturers" Relationship="ScheduleOfFacultyModel.LessonForinKey" FromRole="Lesson" ToRole="JoinLessonLecturer" />
+  </EntityType>
+  <Association Name="LecturerForinKey">
+    <End Role="lecturer" Type="ScheduleOfFacultyModel.lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JoinLessonLecturer" Type="ScheduleOfFacultyModel.JoinLessonLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lecturer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="JoinLessonLecturer">
+        <PropertyRef Name="lecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonForinKey">
+    <End Role="Lesson" Type="ScheduleOfFacultyModel.Lesson" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JoinLessonLecturer" Type="ScheduleOfFacultyModel.JoinLessonLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="JoinLessonLecturer">
+        <PropertyRef Name="lessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

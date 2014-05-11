@@ -10,24 +10,66 @@ namespace ScheduleOfFaculty.Controllers
 {
     public class LecturerController : Controller
     {
-        DbManager dbManager;
-        public LecturerController()
+
+        LecturerStore store;
+        public LecturerController() 
         {
-            dbManager = new DbManager();
+            store = new LecturerStore();
         }
 
         public ActionResult Index()
         {
-            ViewBag.data = dbManager.GetLessons();
             return View();
         }
 
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = dbManager.GetLecturers();
-            return Json(data.ToDataSourceResult(request));
+            return Json(store.Read().ToDataSourceResult(request));
         }
 
-        
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request,IEnumerable<lecturer> lecturers)
+        {
+            if (lecturers != null)
+            {
+                foreach (var lect in lecturers)
+                {
+                    store.Update(lect);
+                }
+            }
+
+            return Json(lecturers.ToDataSourceResult(request));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request,IEnumerable<lecturer> lecturers)
+        {
+            var results = new List<lecturer>();
+
+            if (lecturers != null)
+            {
+                foreach (var lect in lecturers)
+                {
+                    store.Create(lect);
+
+                    results.Add(lect);
+                }
+            }
+
+            return Json(results.ToDataSourceResult(request));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request,IEnumerable<lecturer> lecturers)
+        {
+            foreach (var lect in lecturers)
+            {
+                store.Destroy(lect.id);
+            }
+
+            return Json(lecturers.ToDataSourceResult(request));
+        }
+
+
     }
 }

@@ -16,21 +16,16 @@ namespace ScheduleOfFaculty.Models
     {
         public lecturer()
         {
-            this.lecturerProfessions = new HashSet<lecturerProfession>();
-            this.lessonForLecturers = new HashSet<lessonForLecturer>();
-            this.logins = new HashSet<login>();
+            this.JoinLessonLecturers = new HashSet<JoinLessonLecturer>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
-        public System.DateTime birthday { get; set; }
-        public int qualificationId { get; set; }
-        public int role { get; set; }
+        public string patromic { get; set; }
+        public Nullable<System.DateTime> birthday { get; set; }
+        public Nullable<int> qualification { get; set; }
     
-        public virtual ICollection<lecturerProfession> lecturerProfessions { get; set; }
-        public virtual ICollection<lessonForLecturer> lessonForLecturers { get; set; }
-        public virtual qualification qualification { get; set; }
-        public virtual ICollection<login> logins { get; set; }
+        public virtual ICollection<JoinLessonLecturer> JoinLessonLecturers { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace ScheduleOfFaculty.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class schedulOfFacultyEntities : DbContext
+    public partial class ScheduleForFacultyEntities : DbContext
     {
-        public schedulOfFacultyEntities()
-            : base("name=schedulOfFacultyEntities")
+        public ScheduleForFacultyEntities()
+            : base("name=ScheduleForFacultyEntities")
         {
         }
     
@@ -25,13 +25,8 @@ namespace ScheduleOfFaculty.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<JoinLessonLecturer> JoinLessonLecturers { get; set; }
         public DbSet<lecturer> lecturers { get; set; }
-        public DbSet<lecturerProfession> lecturerProfessions { get; set; }
-        public DbSet<lesson> lessons { get; set; }
-        public DbSet<lessonForLecturer> lessonForLecturers { get; set; }
-        public DbSet<login> logins { get; set; }
-        public DbSet<profession> professions { get; set; }
-        public DbSet<qualification> qualifications { get; set; }
-        public DbSet<type> types { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
     }
 }

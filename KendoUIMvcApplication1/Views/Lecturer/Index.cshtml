@@ -1,45 +1,61 @@
 ﻿@{
     ViewBag.Title = "Դասախոսներ";
 }
-@(Html.Kendo().Grid<ScheduleOfFaculty.Models.LecturerGrid>()
+  
+<div class="lessons" style="margin:10px;">
+ @(Html.Kendo().Grid<ScheduleOfFaculty.Models.lecturer>()
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.Surname).Width(150);
-        columns.Bound(p => p.Name).Width(100);
-        columns.Bound(p => p.Birthday).Width(200);
-        columns.Bound(p => p.Qualification).Width(100);
-        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(172);
+        columns.Bound(p => p.name).Title("Անուն");
+        columns.Bound(p => p.surname).Title("Ազգանուն");
+        columns.Bound(p => p.patromic).Title("Հայրանուն");
+        columns.Bound(p => p.birthday).Title("Ծննդյան օր");
+        columns.Bound(p => p.qualification).Title("Որակավորում");
+        columns.Command(command => command.Destroy()).Width(90);
     })
-    .ToolBar(toolbar => toolbar.Create())
-    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .ToolBar(toolBar =>
+        {
+            toolBar.Create();
+            toolBar.Save();
+        })
+    .Editable(editable => editable.Mode(GridEditMode.InCell))
     .Pageable()
     .Sortable()
-    .Scrollable(s => s.Height("auto"))
-    
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
-        .PageSize(20)
+        .Batch(true)
+        .ServerOperation(false)
         .Events(events => events.Error("error_handler"))
-        .Model(model => model.Id(p => p.Id))
-        .Create(update => update.Action("Create", "Lecturer"))
+        .Model(model =>
+        {
+            model.Id(p => p.id);
+        })
+        .PageSize(20)
         .Read(read => read.Action("Read", "Lecturer"))
-        .Update(update => update.Action("Update", "Lecturer"))
-        .Destroy(update => update.Action("Destroy", "Lecturer"))
+        .Create(create => create.Action("Create", "Lecturer"))
+        .Update(update => update.Action("Update", "Lecturer"))        
+        .Destroy(destroy => destroy.Action("Destroy", "Lecturer"))
     )
 )
+
 <script type="text/javascript">
-    function error_handler(e) {    
+    function error_handler(e) {
         if (e.errors) {
             var message = "Errors:\n";
             $.each(e.errors, function (key, value) {
                 if ('errors' in value) {
-                    $.each(value.errors, function() {
+                    $.each(value.errors, function () {
                         message += this + "\n";
                     });
                 }
-            });        
+            });
             alert(message);
         }
     }
 </script>
+
+</div>
+

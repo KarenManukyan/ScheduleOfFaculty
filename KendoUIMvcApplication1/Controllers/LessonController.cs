@@ -10,71 +10,64 @@ namespace ScheduleOfFaculty.Controllers
 {
     public class LessonController : Controller
     {
-        DbManager dbManager;
+        
+        LessonStore store;
         public LessonController()
         {
-            dbManager = new DbManager();
+            store = new LessonStore();
         }
-        
+
         public ActionResult Index()
         {
-            ViewBag.data = dbManager.GetLessons();
             return View();
         }
 
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = dbManager.GetLessons();
-            return Json(data.ToDataSourceResult(request));
+            return Json(store.Read().ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, LessonGrid lessonGrid)
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request,IEnumerable<Lesson> lessons)
         {
-            if (lessonGrid != null && ModelState.IsValid)
+            if (lessons != null)
             {
-                    lesson les = new lesson();
-                    les.id = lessonGrid.Id;
-                    les.name = lessonGrid.Name;
-                    les.time = lessonGrid.Time;
-                    les.typeId = 3;
-                    dbManager.Update(les);
+                foreach (var less in lessons)
+                {
+                    store.Update(less);
+                }
             }
 
-            return Json((new[]{lessonGrid}.ToDataSourceResult(request, ModelState)));
+            return Json(lessons.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request,LessonGrid lessonGrid)
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request,IEnumerable<Lesson> lessons)
         {
-            var results = new List<LessonGrid>();
+            var results = new List<Lesson>();
 
-            if (lessonGrid != null && ModelState.IsValid)
+            if (lessons != null)
             {
-                    lesson les=new lesson();
-                    les.name = lessonGrid.Name;
-                    les.time = lessonGrid.Time;
-                    les.typeId = 1;
-                    dbManager.CreateLesson(les);
-                    results.Add(lessonGrid);
+                foreach (var lesson in lessons)
+                {
+                    store.Create(lesson);
+
+                    results.Add(lesson);
+                }
             }
 
-            return Json(results.ToDataSourceResult(request, ModelState));
+            return Json(results.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request,LessonGrid lessonGrid)
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request,IEnumerable<Lesson> lessons)
         {
-            if (lessonGrid != null && ModelState.IsValid)
+            foreach (var lesson in lessons)
             {
-                lesson les = new lesson();
-                les.id = lessonGrid.Id;
-                les.name = lessonGrid.Name;
-                les.time = lessonGrid.Time;
-                dbManager.DestroyLesson(les);
+                store.Destroy(lesson.id);
             }
 
-            return Json(new[]{lessonGrid}.ToDataSourceResult(request, ModelState));
+            return Json(lessons.ToDataSourceResult(request));
         }
 
     }

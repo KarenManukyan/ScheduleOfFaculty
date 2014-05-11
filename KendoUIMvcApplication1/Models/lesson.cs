@@ -12,19 +12,18 @@ namespace ScheduleOfFaculty.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class lesson
+    public partial class Lesson
     {
-        public lesson()
+        public Lesson()
         {
-            this.lessonForLecturers = new HashSet<lessonForLecturer>();
+            this.JoinLessonLecturers = new HashSet<JoinLessonLecturer>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
         public int time { get; set; }
-        public int typeId { get; set; }
+        public string type { get; set; }
     
-        public virtual ICollection<lessonForLecturer> lessonForLecturers { get; set; }
-        public virtual type type { get; set; }
+        public virtual ICollection<JoinLessonLecturer> JoinLessonLecturers { get; set; }
     }
 }

@@ -13,28 +13,58 @@ namespace ScheduleOfFaculty.Controllers
 {
     public class HomeController : Controller
     {
-
-        DbManager dbManager;
-        public HomeController()
+        LecturerLessonStore store;
+        public HomeController() 
         {
-            dbManager = new DbManager();
+            store = new LecturerLessonStore();
         }
-        
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult LessonGrid([DataSourceRequest] DataSourceRequest request)
+        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = dbManager.GetLessons();
-            return Json(data.ToDataSourceResult(request));
+            return Json(store.Read().ToDataSourceResult(request));
         }
 
-        public ActionResult LecturerGrid(int employeeID, [DataSourceRequest] DataSourceRequest request)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request, IEnumerable<LessonLecturerGrid> lessons)
         {
-            var data = dbManager.GetLecturer(employeeID);
-            return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+            if (lessons != null)
+            {
+                foreach (var less in lessons)
+                {
+                    store.Update(less);
+                }
+            }
+            return Json(lessons.ToDataSourceResult(request));
+        }
+
+
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request, IEnumerable<LessonLecturerGrid> lessons)
+        {
+            var results = new List<LessonLecturerGrid>();
+            if (lessons != null)
+            {
+                foreach (var lesson in lessons)
+                {
+                    store.Create(lesson);
+                    results.Add(lesson);
+                }
+            }
+            return Json(results.ToDataSourceResult(request));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, IEnumerable<LessonLecturerGrid> lessons)
+        {
+            foreach (var lesson in lessons)
+            {
+                store.Destroy(lesson.Id);
+            }
+            return Json(lessons.ToDataSourceResult(request));
         }
         
         public FileContentResult GetDocument()

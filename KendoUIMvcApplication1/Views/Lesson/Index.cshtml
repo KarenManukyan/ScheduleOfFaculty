@@ -1,44 +1,57 @@
 ﻿@{
     ViewBag.Title = "Առարկաներ";
 }
-@(Html.Kendo().Grid<ScheduleOfFaculty.Models.LessonGrid>()
+<div class="lessons" style="margin:10px;">
+ @(Html.Kendo().Grid<ScheduleOfFaculty.Models.Lesson>()
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.Name).Width(150);
-        columns.Bound(p => p.Time).Width(100);
-        columns.Bound(p => p.Type).Width(150);
-        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(172);
+        columns.Bound(p => p.name).Title("Անուն");
+        columns.Bound(p => p.time).Title("Ժամաքանակ");
+        columns.Bound(p => p.type).Title("Տեսակ");
+        columns.Command(command => command.Destroy()).Width(90);
     })
-    .ToolBar(toolbar => toolbar.Create())
-    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .ToolBar(toolBar =>
+        {
+            toolBar.Create();
+            toolBar.Save();
+        })
+    .Editable(editable => editable.Mode(GridEditMode.InCell))
     .Pageable()
     .Sortable()
-    .Scrollable(s => s.Height("auto"))
-    
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:430px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
-        .PageSize(20)
+        .Batch(true)
+        .ServerOperation(false)
         .Events(events => events.Error("error_handler"))
-        .Model(model => model.Id(p => p.Id))
-        .Create(update => update.Action("Create", "Lesson"))
+        .Model(model =>
+        {
+            model.Id(p => p.id);
+        })
+        .PageSize(20)
         .Read(read => read.Action("Read", "Lesson"))
-        .Update(update => update.Action("Update", "Lesson"))
-        .Destroy(update => update.Action("Destroy", "Lesson"))
+        .Create(create => create.Action("Create", "Lesson"))
+        .Update(update => update.Action("Update", "Lesson"))        
+        .Destroy(destroy => destroy.Action("Destroy", "Lesson"))
     )
 )
+
 <script type="text/javascript">
-    function error_handler(e) {    
+    function error_handler(e) {
         if (e.errors) {
             var message = "Errors:\n";
             $.each(e.errors, function (key, value) {
                 if ('errors' in value) {
-                    $.each(value.errors, function() {
+                    $.each(value.errors, function () {
                         message += this + "\n";
                     });
                 }
-            });        
+            });
             alert(message);
         }
     }
 </script>
+
+</div>
