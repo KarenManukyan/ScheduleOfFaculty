@@ -1,14 +1,16 @@
 ﻿@{
-    ViewBag.Title = "Առարկաներ";
+    ViewBag.Title = "Առարկայի տեսակներ";
+    int count = 0;    
 }
+  
 <div class="lessons" style="margin:10px;">
- @(Html.Kendo().Grid<ScheduleOfFaculty.Models.Lesson>()
+ @(Html.Kendo().Grid<ScheduleOfFaculty.Models.LessonTypeGrid>()
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.name).Title("Անուն");
-        columns.Bound(p => p.Time).Title("Ժամաքանակ");
-        
+        columns.Bound(p => p.CurrentLesson).ClientTemplate("#=CurrentLesson.Name#").Sortable(true); ;
+        columns.Bound(p => p.LessonType).ClientTemplate("#=LessonType.Name#");
+        columns.Bound(p => p.Time);
         columns.Command(command => command.Destroy()).Width(90);
     })
     .ToolBar(toolBar =>
@@ -28,13 +30,17 @@
         .Events(events => events.Error("error_handler"))
         .Model(model =>
         {
-            model.Id(p => p.id);
+            model.Id(p => p.Id);
+            model.Field(p => p.CurrentLesson).DefaultValue(
+                ViewData["defaultLesson"] as ScheduleOfFaculty.Models.LessonGrid);
+            model.Field(p => p.LessonType).DefaultValue(
+                ViewData["defaultLessonType"] as ScheduleOfFaculty.Models.TypeGrid);
         })
         .PageSize(20)
-        .Read(read => read.Action("Read", "Lesson"))
-        .Create(create => create.Action("Create", "Lesson"))
-        .Update(update => update.Action("Update", "Lesson"))        
-        .Destroy(destroy => destroy.Action("Destroy", "Lesson"))
+        .Read(read => read.Action("Read", "LessonType"))
+        .Create(create => create.Action("Create", "LessonType"))
+        .Update(update => update.Action("Update", "LessonType"))        
+        .Destroy(destroy => destroy.Action("Destroy", "LessonType"))
     )
 )
 
@@ -55,3 +61,4 @@
 </script>
 
 </div>
+

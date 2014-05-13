@@ -14,18 +14,13 @@ namespace ScheduleOfFaculty.Models
     
     public partial class lecturer
     {
-        public lecturer()
-        {
-            this.JoinLessonLecturers = new HashSet<JoinLessonLecturer>();
-        }
-    
-        public int id { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public string patromic { get; set; }
         public Nullable<System.DateTime> birthday { get; set; }
         public Nullable<int> qualification { get; set; }
+        public int id { get; set; }
     
-        public virtual ICollection<JoinLessonLecturer> JoinLessonLecturers { get; set; }
+        public virtual JoinLessonLecturer JoinLessonLecturer { get; set; }
     }
 }

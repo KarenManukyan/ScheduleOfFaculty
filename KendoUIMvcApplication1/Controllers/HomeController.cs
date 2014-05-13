@@ -14,13 +14,15 @@ namespace ScheduleOfFaculty.Controllers
     public class HomeController : Controller
     {
         LecturerLessonStore store;
-        public HomeController() 
+        public HomeController()
         {
             store = new LecturerLessonStore();
         }
 
         public ActionResult Index()
         {
+            GetLessons();
+            GetLecturer();
             return View();
         }
 
@@ -30,7 +32,7 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, IEnumerable<LessonLecturerGrid> lessons)
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")] IEnumerable<LessonLecturerGrid> lessons)
         {
             if (lessons != null)
             {
@@ -43,7 +45,7 @@ namespace ScheduleOfFaculty.Controllers
         }
 
 
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, IEnumerable<LessonLecturerGrid> lessons)
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")] IEnumerable<LessonLecturerGrid> lessons)
         {
             var results = new List<LessonLecturerGrid>();
             if (lessons != null)
@@ -58,7 +60,7 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, IEnumerable<LessonLecturerGrid> lessons)
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")] IEnumerable<LessonLecturerGrid> lessons)
         {
             foreach (var lesson in lessons)
             {
@@ -66,14 +68,28 @@ namespace ScheduleOfFaculty.Controllers
             }
             return Json(lessons.ToDataSourceResult(request));
         }
-        
+
         public FileContentResult GetDocument()
         {
-            Report report=new Report();
+            Report report = new Report();
             byte[] doc = report.GetDocument();
             string mimeType = "application/docx";
             Response.AppendHeader("Content-Disposition", "inline; filename=WordReport.docx");
             return File(doc, mimeType);
+        }
+
+        private void GetLessons()
+        {
+            var data = store.GetLesson();
+            ViewData["Lesson"] = data;
+            ViewData["DefaultLesson"] = data.First();
+        }
+
+        private void GetLecturer()
+        {
+            IEnumerable<LecturerGrid> lecturerData = store.GetLecturer();
+            ViewData["Lecturer"] = lecturerData;
+            ViewData["DefaultLecturer"] = lecturerData.First();
         }
     }
 }

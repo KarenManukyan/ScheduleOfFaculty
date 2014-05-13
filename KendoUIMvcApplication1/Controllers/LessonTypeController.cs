@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ScheduleOfFaculty.Models;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using Kendo.Mvc.Resources;
-using Kendo.Mvc.Infrastructure;
+using ScheduleOfFaculty.Models;
+using System.Web.Script.Serialization;
+using ScheduleOfFaculty.Services;
 
 namespace ScheduleOfFaculty.Controllers
 {
-    public class LessonController : Controller
+    public class LessonTypeController : Controller
     {
-        
-        LessonStore store;
-        public LessonController()
+        LessonTypeStore store;
+        public LessonTypeController()
         {
-            store = new LessonStore();
+            store = new LessonTypeStore();
         }
 
         public ActionResult Index()
         {
+            GetLessons();
+            GetTypes();
             return View();
         }
 
@@ -31,7 +32,7 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lesson> lessons)
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")] IEnumerable<LessonTypeGrid> lessons)
         {
             if (lessons != null)
             {
@@ -40,37 +41,46 @@ namespace ScheduleOfFaculty.Controllers
                     store.Update(less);
                 }
             }
-
             return Json(lessons.ToDataSourceResult(request));
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lesson> lessons)
-        {
-            var results = new List<Lesson>();
 
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")] IEnumerable<LessonTypeGrid> lessons)
+        {
+            var results = new List<LessonTypeGrid>();
             if (lessons != null)
             {
                 foreach (var lesson in lessons)
                 {
                     store.Create(lesson);
-
                     results.Add(lesson);
                 }
             }
-
             return Json(results.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lesson> lessons)
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")] IEnumerable<LessonTypeGrid> lessons)
         {
             foreach (var lesson in lessons)
             {
-                store.Destroy(lesson.id);
+                store.Destroy(lesson.Id);
             }
-
             return Json(lessons.ToDataSourceResult(request));
+        }
+
+        private void GetLessons()
+        {
+            var data = store.GetLessons();
+            ViewData["lesson"] = data;
+            ViewData["defaultLesson"] = data.First();
+        }
+
+        private void GetTypes()
+        {
+            var data = store.GetTypes();
+            ViewData["lessonType"] = data;
+            ViewData["defaultLessonType"] = data.First();
         }
     }
 }

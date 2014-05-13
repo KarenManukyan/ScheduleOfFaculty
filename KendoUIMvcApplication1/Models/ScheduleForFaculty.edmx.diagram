@@ -4,12 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1edd86db04eb40278581b41dcf3d7f92" Name="Диаграмма1">
-        <EntityTypeShape EntityType="ScheduleOfFacultyModel.JoinLessonLecturer" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScheduleOfFacultyModel.lecturer" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScheduleOfFacultyModel.Lesson" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <AssociationConnector Association="ScheduleOfFacultyModel.LecturerForinKey" ManuallyRouted="false" />
-        <AssociationConnector Association="ScheduleOfFacultyModel.LessonForinKey" ManuallyRouted="false" />
+      <Diagram DiagramId="02808e72c92c46f2a1f5075b5efb314f" Name="Диаграмма1">
+        <EntityTypeShape EntityType="ScheduleForFacultyModel.JoinLessonLecturer" Width="1.5" PointX="1.875" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScheduleForFacultyModel.JoinLessonType" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScheduleForFacultyModel.lecturer" Width="1.5" PointX="4.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScheduleForFacultyModel.Lesson" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScheduleForFacultyModel.Type" Width="1.5" PointX="6.25" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="ScheduleForFacultyModel.LecturerConnection" ManuallyRouted="false" />
+        <AssociationConnector Association="ScheduleForFacultyModel.LessonForinKey" ManuallyRouted="false" />
+        <AssociationConnector Association="ScheduleForFacultyModel.JoinLesson" ManuallyRouted="false" />
+        <AssociationConnector Association="ScheduleForFacultyModel.JoinType" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

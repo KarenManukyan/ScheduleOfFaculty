@@ -17,15 +17,15 @@ namespace ScheduleOfFaculty.Models
         }
         public List<LessonLecturerGrid> Read()
         {
-            var data = _db.JoinLessonLecturers.Select(c=>c);
-            List<LessonLecturerGrid> lessonLecturerList =new List<LessonLecturerGrid>();
+            var data = _db.JoinLessonLecturers.Select(c => c);
+            List<LessonLecturerGrid> lessonLecturerList = new List<LessonLecturerGrid>();
             foreach (var lectLess in data)
             {
                 lessonLecturerList.Add(new LessonLecturerGrid
                 {
                     Id = lectLess.id,
-                    Lect = _db.lecturers.Find(lectLess.lecturerId),
-                    Less = _db.Lessons.Find(lectLess.lessonId),
+                    Lect = new LecturerGrid(_db.lecturers.Find(lectLess.lecturerId)),
+                    Less = new LessonGrid(_db.Lessons.Find(lectLess.lessonId)),
                     Time = lectLess.TimeForLecurer
                 });
             }
@@ -36,8 +36,8 @@ namespace ScheduleOfFaculty.Models
         {
             _db.JoinLessonLecturers.Add(new JoinLessonLecturer
             {
-                lecturerId = lessLec.Lect.id,
-                lessonId = lessLec.Less.id,
+                lecturerId = lessLec.Lect.Id,
+                lessonId = lessLec.Less.Id,
                 TimeForLecurer = lessLec.Time
             });
             _db.SaveChanges();
@@ -47,8 +47,8 @@ namespace ScheduleOfFaculty.Models
         {
 
             JoinLessonLecturer lect = _db.JoinLessonLecturers.Find(lessLec.Id);
-            lect.lecturerId = lessLec.Lect.id;
-            lect.lessonId = lessLec.Less.id;
+            lect.lecturerId = lessLec.Lect.Id;
+            lect.lessonId = lessLec.Less.Id;
             lect.TimeForLecurer = lessLec.Time;
             _db.SaveChanges();
         }
@@ -58,6 +58,27 @@ namespace ScheduleOfFaculty.Models
             JoinLessonLecturer lect = _db.JoinLessonLecturers.Find(id);
             _db.JoinLessonLecturers.Remove(lect);
             _db.SaveChanges();
+        }
+
+        public IEnumerable<LessonGrid> GetLesson()
+        {
+            var data = _db.Lessons.Select(c => new LessonGrid
+            {
+                Id = c.id,
+                Name = c.name
+            });
+            return data;
+        }
+
+        public IEnumerable<LecturerGrid> GetLecturer()
+        {
+            var data = _db.lecturers.Select(c => new LecturerGrid
+            {
+                Id = c.id,
+                Name = c.name + " " + c.surname
+
+            });
+            return data;
         }
     }
 }

@@ -32,8 +32,7 @@ namespace ScheduleOfFaculty.Models
         {
             Lesson less = _db.Lessons.Find(updatedLesson.id);
             less.name = updatedLesson.name;
-            less.time = updatedLesson.time;
-            less.type = updatedLesson.type;
+            less.Time = updatedLesson.Time;
             _db.SaveChanges();
         }
 
@@ -43,6 +42,5 @@ namespace ScheduleOfFaculty.Models
             _db.Lessons.Remove(less);
             _db.SaveChanges();
         }
-
     }
 }

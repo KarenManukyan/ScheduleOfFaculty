@@ -26,7 +26,9 @@ namespace ScheduleOfFaculty.Models
         }
     
         public DbSet<JoinLessonLecturer> JoinLessonLecturers { get; set; }
+        public DbSet<JoinLessonType> JoinLessonTypes { get; set; }
         public DbSet<lecturer> lecturers { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Type> Types { get; set; }
     }
 }
