@@ -14,12 +14,14 @@ namespace ScheduleOfFaculty.Models
     
     public partial class JoinLessonLecturer
     {
-        public int id { get; set; }
-        public int lessonId { get; set; }
-        public int TimeForLecurer { get; set; }
+        public int Id { get; set; }
         public int lecturerId { get; set; }
+        public int lessonId { get; set; }
+        public int typeId { get; set; }
+        public int Time { get; set; }
     
-        public virtual lecturer lecturer { get; set; }
+        public virtual Lecturer Lecturer { get; set; }
         public virtual Lesson Lesson { get; set; }
+        public virtual Type Type { get; set; }
     }
 }

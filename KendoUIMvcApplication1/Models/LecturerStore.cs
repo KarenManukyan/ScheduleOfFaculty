@@ -15,34 +15,31 @@ namespace ScheduleOfFaculty.Models
             _db = new ScheduleForFacultyEntities();
             _db.Configuration.ProxyCreationEnabled = false;
         }
-        public IEnumerable<lecturer> Read()
+        public IEnumerable<Lecturer> Read()
         {
-            var data = _db.lecturers.Select(c => c);
+            var data = _db.Lecturers.Select(c => c);
             return data;
         }
 
-        public void Create(lecturer lect)
+        public void Create(Lecturer lect)
         {
-            _db.lecturers.Add(lect);
+            _db.Lecturers.Add(lect);
             _db.SaveChanges();
         }
 
-        public void Update(lecturer updatedlect)
+        public void Update(Lecturer updatedlect)
         {
 
-            lecturer lect = _db.lecturers.Find(updatedlect.id);
-            lect.name = updatedlect.name;
-            lect.surname = updatedlect.surname;
-            lect.patromic = updatedlect.patromic;
-            //lect.birthday = updatedlect.birthday;
-            lect.qualification = updatedlect.qualification;
+            Lecturer lect = _db.Lecturers.Find(updatedlect.Id);
+            lect.Name = updatedlect.Name;
+            lect.Qualification = updatedlect.Qualification;
             _db.SaveChanges();
         }
 
         public void Destroy(int id)
         {
-            lecturer lect = _db.lecturers.Find(id);
-            _db.lecturers.Remove(lect);
+            Lecturer lect = _db.Lecturers.Find(id);
+            _db.Lecturers.Remove(lect);
             _db.SaveChanges();
         }
     }

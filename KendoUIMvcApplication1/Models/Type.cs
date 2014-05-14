@@ -16,12 +16,14 @@ namespace ScheduleOfFaculty.Models
     {
         public Type()
         {
+            this.JoinLessonLecturers = new HashSet<JoinLessonLecturer>();
             this.JoinLessonTypes = new HashSet<JoinLessonType>();
         }
     
         public int Id { get; set; }
         public string Type1 { get; set; }
     
+        public virtual ICollection<JoinLessonLecturer> JoinLessonLecturers { get; set; }
         public virtual ICollection<JoinLessonType> JoinLessonTypes { get; set; }
     }
 }

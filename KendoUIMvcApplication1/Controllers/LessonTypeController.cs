@@ -73,14 +73,20 @@ namespace ScheduleOfFaculty.Controllers
         {
             var data = store.GetLessons();
             ViewData["lesson"] = data;
-            ViewData["defaultLesson"] = data.First();
+            if (data.Count > 0)
+            {
+                ViewData["defaultLesson"] = data.First();
+            }
         }
 
         private void GetTypes()
         {
             var data = store.GetTypes();
             ViewData["lessonType"] = data;
-            ViewData["defaultLessonType"] = data.First();
+            if (data.Count > 0)
+            {
+                ViewData["defaultLessonType"] = data.First();
+            }
         }
     }
 }

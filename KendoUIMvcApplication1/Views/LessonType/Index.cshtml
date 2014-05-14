@@ -8,15 +8,17 @@
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.CurrentLesson).ClientTemplate("#=CurrentLesson.Name#").Sortable(true); ;
-        columns.Bound(p => p.LessonType).ClientTemplate("#=LessonType.Name#");
-        columns.Bound(p => p.Time);
-        columns.Command(command => command.Destroy()).Width(90);
+        columns.ForeignKey(p => p.CurrentLesson.Id, (System.Collections.IEnumerable)ViewData["lesson"], "Id", "Name")
+               .Title("Առարկա");
+        columns.ForeignKey(p => p.LessonType.Id, (System.Collections.IEnumerable)ViewData["lessonType"], "Id", "Name")
+               .Title("Տեսակը");
+        columns.Bound(p => p.Time).Title("Ժամ");
+        columns.Command(command => command.Destroy()).Width(190);
     })
     .ToolBar(toolBar =>
         {
-            toolBar.Create();
-            toolBar.Save();
+            toolBar.Create().Text("Ավելացնել");
+            toolBar.Save().Text("Հիշել");
         })
     .Editable(editable => editable.Mode(GridEditMode.InCell))
     .Pageable()

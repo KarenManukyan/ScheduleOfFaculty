@@ -4,10 +4,11 @@
     <EntitySetMapping Name="JoinLessonLecturers">
       <EntityTypeMapping TypeName="ScheduleForFacultyModel.JoinLessonLecturer">
         <MappingFragment StoreEntitySet="JoinLessonLecturer">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="lessonId" ColumnName="lessonId" />
-          <ScalarProperty Name="TimeForLecurer" ColumnName="TimeForLecurer" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+          <ScalarProperty Name="lessonId" ColumnName="lessonId" />
+          <ScalarProperty Name="typeId" ColumnName="typeId" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -21,15 +22,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="lecturers">
-      <EntityTypeMapping TypeName="ScheduleForFacultyModel.lecturer">
-        <MappingFragment StoreEntitySet="lecturer">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="surname" ColumnName="surname" />
-          <ScalarProperty Name="patromic" ColumnName="patromic" />
-          <ScalarProperty Name="birthday" ColumnName="birthday" />
-          <ScalarProperty Name="qualification" ColumnName="qualification" />
-          <ScalarProperty Name="id" ColumnName="id" />
+    <EntitySetMapping Name="Lecturers">
+      <EntityTypeMapping TypeName="ScheduleForFacultyModel.Lecturer">
+        <MappingFragment StoreEntitySet="Lecturer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Qualification" ColumnName="Qualification" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

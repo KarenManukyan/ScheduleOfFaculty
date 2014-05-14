@@ -1,14 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Առարկաներ";
+    ViewBag.Title = "Դասախոս - Առարկաի Տեսակ";
 }
 <div class="lessons" style="margin:10px;">
- @(Html.Kendo().Grid<ScheduleOfFaculty.Models.Lesson>()
+ @(Html.Kendo().Grid<ScheduleOfFaculty.Models.Type>()
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.name).Title("Անուն");
-        columns.Bound(p => p.Time).Title("Ժամաքանակ");
-        
+        columns.Bound(p => p.Type1).Title("Տեսակ");
         columns.Command(command => command.Destroy()).Width(190);
     })
     .ToolBar(toolBar =>
@@ -28,13 +26,13 @@
         .Events(events => events.Error("error_handler"))
         .Model(model =>
         {
-            model.Id(p => p.id);
+            model.Id(p => p.Id);
         })
         .PageSize(20)
-        .Read(read => read.Action("Read", "Lesson"))
-        .Create(create => create.Action("Create", "Lesson"))
-        .Update(update => update.Action("Update", "Lesson"))        
-        .Destroy(destroy => destroy.Action("Destroy", "Lesson"))
+        .Read(read => read.Action("Read", "Type"))
+        .Create(create => create.Action("Create", "Type"))
+        .Update(update => update.Action("Update", "Type"))        
+        .Destroy(destroy => destroy.Action("Destroy", "Type"))
     )
 )
 

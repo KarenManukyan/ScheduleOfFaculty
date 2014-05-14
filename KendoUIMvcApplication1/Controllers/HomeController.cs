@@ -23,6 +23,7 @@ namespace ScheduleOfFaculty.Controllers
         {
             GetLessons();
             GetLecturer();
+            GetTypes();
             return View();
         }
 
@@ -81,15 +82,32 @@ namespace ScheduleOfFaculty.Controllers
         private void GetLessons()
         {
             var data = store.GetLesson();
-            ViewData["Lesson"] = data;
-            ViewData["DefaultLesson"] = data.First();
+            ViewData["lesson"] = data;
+            if (data.Count > 0)
+            {
+                ViewData["defaultLesson"] = data.First();
+            }
         }
 
         private void GetLecturer()
         {
-            IEnumerable<LecturerGrid> lecturerData = store.GetLecturer();
-            ViewData["Lecturer"] = lecturerData;
-            ViewData["DefaultLecturer"] = lecturerData.First();
+            var data = store.GetLecturer();
+            ViewData["lecturer"] = data;
+            if (data.Count > 0)
+            {
+                ViewData["defaultLecturer"] = data.First();
+            }
         }
+        
+        private void GetTypes()
+        {
+            var data = store.GetTypes();
+            ViewData["lessonType"] = data;
+            if (data.Count > 0)
+            {
+                ViewData["defaultLessonType"] = data.First();
+            }
+        }
+
     }
 }

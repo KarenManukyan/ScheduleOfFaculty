@@ -20,10 +20,10 @@ namespace ScheduleOfFaculty.Models
     public class LecturerGrid
     {
         public LecturerGrid() { }
-        public LecturerGrid(lecturer lect)
+        public LecturerGrid(Lecturer lect)
         {
-            this.Id = lect.id;
-            this.Name = lect.name + " " + lect.surname;
+            this.Id = lect.Id;
+            this.Name = lect.Name;
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -47,6 +47,7 @@ namespace ScheduleOfFaculty.Models
         public int Id { get; set; }
         public LessonGrid Less { get; set; }
         public LecturerGrid Lect { get; set; }
+        public TypeGrid LessonType { get; set; }
         public int Time { get; set; }
     }
 

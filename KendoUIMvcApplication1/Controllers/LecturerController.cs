@@ -28,7 +28,7 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<lecturer> lecturers)
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lecturer> lecturers)
         {
             if (lecturers != null)
             {
@@ -42,9 +42,9 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<lecturer> lecturers)
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lecturer> lecturers)
         {
-            var results = new List<lecturer>();
+            var results = new List<Lecturer>();
 
             if (lecturers != null)
             {
@@ -60,11 +60,11 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<lecturer> lecturers)
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lecturer> lecturers)
         {
             foreach (var lect in lecturers)
             {
-                store.Destroy(lect.id);
+                store.Destroy(lect.Id);
             }
 
             return Json(lecturers.ToDataSourceResult(request));

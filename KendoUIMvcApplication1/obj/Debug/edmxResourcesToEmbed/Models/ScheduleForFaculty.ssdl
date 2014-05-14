@@ -3,7 +3,7 @@
   <EntityContainer Name="Хранилище ScheduleForFacultyModelContainer">
     <EntitySet Name="JoinLessonLecturer" EntityType="Хранилище ScheduleForFacultyModel.JoinLessonLecturer" store:Type="Tables" />
     <EntitySet Name="JoinLessonType" EntityType="Хранилище ScheduleForFacultyModel.JoinLessonType" store:Type="Tables" />
-    <EntitySet Name="lecturer" EntityType="Хранилище ScheduleForFacultyModel.lecturer" store:Type="Tables" />
+    <EntitySet Name="Lecturer" EntityType="Хранилище ScheduleForFacultyModel.Lecturer" store:Type="Tables" />
     <EntitySet Name="Lesson" EntityType="Хранилище ScheduleForFacultyModel.Lesson" store:Type="Tables" />
     <EntitySet Name="Type" EntityType="Хранилище ScheduleForFacultyModel.Type" store:Type="Tables" />
     <AssociationSet Name="JoinLesson" Association="Хранилище ScheduleForFacultyModel.JoinLesson">
@@ -14,23 +14,28 @@
       <End Role="Type" EntitySet="Type" />
       <End Role="JoinLessonType" EntitySet="JoinLessonType" />
     </AssociationSet>
-    <AssociationSet Name="LecturerConnection" Association="Хранилище ScheduleForFacultyModel.LecturerConnection">
-      <End Role="lecturer" EntitySet="lecturer" />
+    <AssociationSet Name="ToLecturer" Association="Хранилище ScheduleForFacultyModel.ToLecturer">
+      <End Role="Lecturer" EntitySet="Lecturer" />
       <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturer" />
     </AssociationSet>
-    <AssociationSet Name="LessonForinKey" Association="Хранилище ScheduleForFacultyModel.LessonForinKey">
+    <AssociationSet Name="ToLesson" Association="Хранилище ScheduleForFacultyModel.ToLesson">
       <End Role="Lesson" EntitySet="Lesson" />
+      <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="ToType" Association="Хранилище ScheduleForFacultyModel.ToType">
+      <End Role="Type" EntitySet="Type" />
       <End Role="JoinLessonLecturer" EntitySet="JoinLessonLecturer" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="JoinLessonLecturer">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="lessonId" Type="int" Nullable="false" />
-    <Property Name="TimeForLecurer" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="lecturerId" Type="int" Nullable="false" />
+    <Property Name="lessonId" Type="int" Nullable="false" />
+    <Property Name="typeId" Type="int" Nullable="false" />
+    <Property Name="Time" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="JoinLessonType">
     <Key>
@@ -41,16 +46,13 @@
     <Property Name="TypeId" Type="int" />
     <Property Name="Time" Type="int" />
   </EntityType>
-  <EntityType Name="lecturer">
+  <EntityType Name="Lecturer">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="surname" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="patromic" Type="nvarchar" MaxLength="100" />
-    <Property Name="birthday" Type="datetime" />
-    <Property Name="qualification" Type="int" />
-    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Qualification" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Lesson">
     <Key>
@@ -58,7 +60,7 @@
     </Key>
     <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Time" Type="nvarchar" MaxLength="100" />
+    <Property Name="Time" Type="int" />
   </EntityType>
   <EntityType Name="Type">
     <Key>
@@ -91,24 +93,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LecturerConnection">
-    <End Role="lecturer" Type="Хранилище ScheduleForFacultyModel.lecturer" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="JoinLessonLecturer" Type="Хранилище ScheduleForFacultyModel.JoinLessonLecturer" Multiplicity="0..1" />
+  <Association Name="ToLecturer">
+    <End Role="Lecturer" Type="Хранилище ScheduleForFacultyModel.Lecturer" Multiplicity="1" />
+    <End Role="JoinLessonLecturer" Type="Хранилище ScheduleForFacultyModel.JoinLessonLecturer" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="lecturer">
-        <PropertyRef Name="id" />
+      <Principal Role="Lecturer">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="JoinLessonLecturer">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="lecturerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LessonForinKey">
-    <End Role="Lesson" Type="Хранилище ScheduleForFacultyModel.Lesson" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+  <Association Name="ToLesson">
+    <End Role="Lesson" Type="Хранилище ScheduleForFacultyModel.Lesson" Multiplicity="1" />
     <End Role="JoinLessonLecturer" Type="Хранилище ScheduleForFacultyModel.JoinLessonLecturer" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Lesson">
@@ -116,6 +114,18 @@
       </Principal>
       <Dependent Role="JoinLessonLecturer">
         <PropertyRef Name="lessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ToType">
+    <End Role="Type" Type="Хранилище ScheduleForFacultyModel.Type" Multiplicity="1" />
+    <End Role="JoinLessonLecturer" Type="Хранилище ScheduleForFacultyModel.JoinLessonLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JoinLessonLecturer">
+        <PropertyRef Name="typeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

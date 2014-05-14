@@ -22,7 +22,7 @@ namespace ScheduleOfFaculty.Models
     
         public int id { get; set; }
         public string name { get; set; }
-        public string Time { get; set; }
+        public Nullable<int> Time { get; set; }
     
         public virtual ICollection<JoinLessonLecturer> JoinLessonLecturers { get; set; }
         public virtual ICollection<JoinLessonType> JoinLessonTypes { get; set; }

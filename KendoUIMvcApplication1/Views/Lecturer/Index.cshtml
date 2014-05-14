@@ -3,21 +3,18 @@
 }
   
 <div class="lessons" style="margin:10px;">
- @(Html.Kendo().Grid<ScheduleOfFaculty.Models.lecturer>()
+ @(Html.Kendo().Grid<ScheduleOfFaculty.Models.Lecturer>()
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.name).Title("Անուն");
-        columns.Bound(p => p.surname).Title("Ազգանուն");
-        columns.Bound(p => p.patromic).Title("Հայրանուն");
-        columns.Bound(p => p.birthday).Title("Ծննդյան օր");
-        columns.Bound(p => p.qualification).Title("Որակավորում");
-        columns.Command(command => command.Destroy()).Width(90);
+        columns.Bound(p => p.Name).Title("Ազգանուն Ա.Հ");
+        columns.Bound(p => p.Qualification).Title("Որակավորում");
+        columns.Command(command => command.Destroy()).Width(190).Title("Ջնջել");
     })
     .ToolBar(toolBar =>
         {
-            toolBar.Create();
-            toolBar.Save();
+            toolBar.Create().Text("Ավելացնել");
+            toolBar.Save().Text("Հիշել");
         })
     .Editable(editable => editable.Mode(GridEditMode.InCell))
     .Pageable()
@@ -31,7 +28,7 @@
         .Events(events => events.Error("error_handler"))
         .Model(model =>
         {
-            model.Id(p => p.id);
+            model.Id(p => p.Id);
         })
         .PageSize(20)
         .Read(read => read.Action("Read", "Lecturer"))

@@ -8,15 +8,19 @@
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.Lect.Name);
-        columns.Bound(p => p.Less.Name);
-        columns.Bound(p => p.Time);
-        columns.Command(command => command.Destroy()).Width(90);
+        columns.ForeignKey(p => p.Lect.Id, (System.Collections.IEnumerable)ViewData["lecturer"], "Id", "Name")
+               .Title("Դասախոս");
+        columns.ForeignKey(p => p.Less.Id, (System.Collections.IEnumerable)ViewData["lesson"], "Id", "Name")
+               .Title("Առարկա");
+        columns.ForeignKey(p => p.LessonType.Id, (System.Collections.IEnumerable)ViewData["lessonType"], "Id", "Name")
+               .Title("Տեսակ");
+        columns.Bound(p => p.Time).Title("Ժամ");
+        columns.Command(command => command.Destroy().Text("Ջնջել")).Width(90);
     })
     .ToolBar(toolBar =>
         {
-            toolBar.Create();
-            toolBar.Save();
+            toolBar.Create().Text("Ավելացնել");
+            toolBar.Save().Text("Հիշել");
         })
     .Editable(editable => editable.Mode(GridEditMode.InCell))
     .Pageable()
@@ -31,16 +35,12 @@
         .Model(model =>
         {
             model.Id(p => p.Id);
-            model.Field(p => p.Lect.Id).Editable(false);
-            model.Field(p => p.Lect.Id).Editable(false);
             model.Field(p => p.Less).DefaultValue(
-                ViewData["Lesson"] as ScheduleOfFaculty.Models.Lesson);
-            model.Field(p => p.Less).DefaultValue(
-                ViewData["DefaultLesson"] as ScheduleOfFaculty.Models.Lesson);
+                ViewData["defaultLesson"] as ScheduleOfFaculty.Models.LessonGrid);
             model.Field(p => p.Lect).DefaultValue(
-                ViewData["Lecturer"] as ScheduleOfFaculty.Models.lecturer);
-            model.Field(p => p.Lect).DefaultValue(
-                ViewData["DefaultLecturer"] as ScheduleOfFaculty.Models.lecturer);
+                ViewData["defaultLecturer"] as ScheduleOfFaculty.Models.LecturerGrid);
+            model.Field(p => p.LessonType).DefaultValue(
+                ViewData["defaultLessonType"] as ScheduleOfFaculty.Models.TypeGrid);
         })
         .PageSize(20)
         .Read(read => read.Action("Read", "Home"))

@@ -23,10 +23,11 @@ namespace ScheduleOfFaculty.Models
             {
                 lessonLecturerList.Add(new LessonLecturerGrid
                 {
-                    Id = lectLess.id,
-                    Lect = new LecturerGrid(_db.lecturers.Find(lectLess.lecturerId)),
+                    Id = lectLess.Id,
+                    Lect = new LecturerGrid(_db.Lecturers.Find(lectLess.lecturerId)),
                     Less = new LessonGrid(_db.Lessons.Find(lectLess.lessonId)),
-                    Time = lectLess.TimeForLecurer
+                    LessonType = new TypeGrid(_db.Types.Find(lectLess.typeId)),
+                    Time = lectLess.Time
                 });
             }
             return lessonLecturerList;
@@ -38,7 +39,8 @@ namespace ScheduleOfFaculty.Models
             {
                 lecturerId = lessLec.Lect.Id,
                 lessonId = lessLec.Less.Id,
-                TimeForLecurer = lessLec.Time
+                typeId = lessLec.LessonType.Id,
+                Time = lessLec.Time
             });
             _db.SaveChanges();
         }
@@ -49,7 +51,8 @@ namespace ScheduleOfFaculty.Models
             JoinLessonLecturer lect = _db.JoinLessonLecturers.Find(lessLec.Id);
             lect.lecturerId = lessLec.Lect.Id;
             lect.lessonId = lessLec.Less.Id;
-            lect.TimeForLecurer = lessLec.Time;
+            lect.typeId = lessLec.LessonType.Id;
+            lect.Time = lessLec.Time;
             _db.SaveChanges();
         }
 
@@ -60,25 +63,50 @@ namespace ScheduleOfFaculty.Models
             _db.SaveChanges();
         }
 
-        public IEnumerable<LessonGrid> GetLesson()
+        public List<LessonGrid> GetLesson()
         {
-            var data = _db.Lessons.Select(c => new LessonGrid
+            var data = _db.Lessons.Select(c => c);
+            List<LessonGrid> lesson = new List<LessonGrid>();
+            foreach (var less in data)
             {
-                Id = c.id,
-                Name = c.name
-            });
-            return data;
+                lesson.Add(new LessonGrid
+                {
+                    Id = less.id,
+                    Name = less.name
+                });
+            }
+            return lesson;
         }
 
-        public IEnumerable<LecturerGrid> GetLecturer()
+        public List<LecturerGrid> GetLecturer()
         {
-            var data = _db.lecturers.Select(c => new LecturerGrid
+            var data = _db.Lecturers.Select(c => c);
+            List<LecturerGrid> lecturer = new List<LecturerGrid>();
+            foreach (var lect in data)
             {
-                Id = c.id,
-                Name = c.name + " " + c.surname
-
-            });
-            return data;
+                lecturer.Add(new LecturerGrid
+                {
+                    Id = lect.Id,
+                    Name = lect.Name
+                });
+            }
+            return lecturer;
         }
+
+        public List<TypeGrid> GetTypes()
+        {
+            var data = _db.Types.Select(c => c);
+            List<TypeGrid> lessonType = new List<TypeGrid>();
+            foreach (var type in data)
+            {
+                lessonType.Add(new TypeGrid
+                {
+                    Id = type.Id,
+                    Name = type.Type1
+                });
+            }   
+            return lessonType;
+        }
+
     }
 }

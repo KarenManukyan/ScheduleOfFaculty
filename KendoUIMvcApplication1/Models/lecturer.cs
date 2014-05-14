@@ -12,15 +12,17 @@ namespace ScheduleOfFaculty.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class lecturer
+    public partial class Lecturer
     {
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string patromic { get; set; }
-        public Nullable<System.DateTime> birthday { get; set; }
-        public Nullable<int> qualification { get; set; }
-        public int id { get; set; }
+        public Lecturer()
+        {
+            this.JoinLessonLecturers = new HashSet<JoinLessonLecturer>();
+        }
     
-        public virtual JoinLessonLecturer JoinLessonLecturer { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Qualification { get; set; }
+    
+        public virtual ICollection<JoinLessonLecturer> JoinLessonLecturers { get; set; }
     }
 }

@@ -9,15 +9,16 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
 using Kendo.Mvc.Infrastructure;
 
+
 namespace ScheduleOfFaculty.Controllers
 {
-    public class LessonController : Controller
+    public class TypeController : Controller
     {
-        
-        LessonStore store;
-        public LessonController()
+         
+        TypeStore store;
+        public TypeController()
         {
-            store = new LessonStore();
+            store = new TypeStore();
         }
 
         public ActionResult Index()
@@ -31,7 +32,7 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lesson> lessons)
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ScheduleOfFaculty.Models.Type> lessons)
         {
             if (lessons != null)
             {
@@ -45,9 +46,9 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lesson> lessons)
+        public ActionResult Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ScheduleOfFaculty.Models.Type> lessons)
         {
-            var results = new List<Lesson>();
+            var results = new List<ScheduleOfFaculty.Models.Type>();
 
             if (lessons != null)
             {
@@ -63,11 +64,11 @@ namespace ScheduleOfFaculty.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Lesson> lessons)
+        public ActionResult Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ScheduleOfFaculty.Models.Type> lessons)
         {
             foreach (var lesson in lessons)
             {
-                store.Destroy(lesson.id);
+                store.Destroy(lesson.Id);
             }
 
             return Json(lessons.ToDataSourceResult(request));
